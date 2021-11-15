@@ -1,15 +1,10 @@
 # Install Thanos
-
-Create namespace with
+### Create namespace
 
     oc apply -f thanos/thanos-namespace.yaml
-
-Install Thanos and Prometheus with
+### Install Thanos and Prometheus
 
     (ls prometheus/*;ls thanos/*) | xargs -L 1 oc apply -f
-
-
-
-The path for the Grafana datasource is
+## Path for Grafana datasource
 
     http://thanos-querier.thanos-test.svc.cluster.local:9090
