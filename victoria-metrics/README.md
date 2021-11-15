@@ -19,5 +19,5 @@
 ## Install Prometheus
 
     ls prometheus/* | xargs -L 1 oc apply -f
-## Path for Grafana datasource
+# Path for Grafana datasource
     http://vmcluster-victoria-metrics-cluster-vmselect.victoria-metrics-test.svc.cluster.local:8481/select/0/prometheus/
