@@ -3,8 +3,7 @@ kind: SecurityContextConstraints
 metadata:
   name: grafana-scc
 runAsUser:
-  type: MustRunAs
-  uid: 1001
+  type: RunAsAny
 seLinuxContext:
   type: RunAsAny
 supplementalGroups:
