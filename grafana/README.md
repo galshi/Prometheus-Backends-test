@@ -19,4 +19,4 @@
     oc apply -f grafana-cluster-role-binding.yaml
 
 ### Expose route
-    oc expose svc/grafana-test
+    oc apply -f grafana-route.yaml
