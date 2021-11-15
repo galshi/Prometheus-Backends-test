@@ -1,0 +1,13 @@
+apiVersion: security.openshift.io/v1
+kind: SecurityContextConstraints
+metadata:
+  name: grafana-scc
+runAsUser:
+  type: MustRunAs
+  uid: 1001
+seLinuxContext:
+  type: RunAsAny
+supplementalGroups:
+  type: RunAsAny
+fsGroup:
+  type: RunAsAny
