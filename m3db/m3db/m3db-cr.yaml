@@ -22,5 +22,6 @@ spec:
     sources:
       - PodUID
   namespaces:
-    - name: metrics-10s:2d
-      preset: 10s:2d
+    - name: default
+      retention: 48h
+      type: unaggregated
