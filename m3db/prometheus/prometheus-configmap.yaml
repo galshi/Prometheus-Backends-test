@@ -12,7 +12,7 @@ data:
             evaluation_interval: 15s
 
         remote_write:
-          - url: m3coordinator-simple-cluster.m3db-test.svc.cluster.local:7201/api/v1/prom/remote/write
+          - url: http://m3coordinator-simple-cluster.m3db-test.svc.cluster.local:7201/api/v1/prom/remote/write
 
         scrape_configs:
           - job_name: prometheus
