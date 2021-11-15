@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prometheus
+  namespace: thanos-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prometheus
+  template:
+    metadata:
+      labels:
+        app: prometheus
+    spec:
+      containers:
+      - image: prom/prometheus:v2.30.3
+        args:
+          - --config.file=/etc/prometheus/config/prometheus-config.yml
+          - --storage.tsdb.retention.time=2h
+          - --storage.tsdb.path=/prometheus/data
+          - --web.enable-lifecycle
+          - --web.enable-admin-api
+        imagePullPolicy: IfNotPresent
+        name: prometheus
+        ports:
+        - containerPort: 9090
+          protocol: TCP
+        - containerPort: 19191
+          protocol: TCP
+        - containerPort: 19090
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /etc/prometheus/config/
+          name: prometheus-config
+        - mountPath: /prometheus
+          name: prometheus-claim
+      - image: quay.io/thanos/thanos:v0.23.1
+        args:
+          - sidecar
+          - --tsdb.path=/prometheus/data
+          #- --objstore.config-file=bucket_config.yaml # Bucket config file to send data to
+          - --prometheus.url=http://localhost:9090
+          - --http-address=0.0.0.0:19191
+          - --grpc-address=0.0.0.0:19090
+        imagePullPolicy: IfNotPresent
+        name: thanos-sidecar
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+        - configMap:
+            default-mode: 660
+            items:
+              - key: prometheus-config.yml
+                path: prometheus-config.yml
+            name: prometheus-config
+          name: prometheus-config
+        - persistentVolumeClaim:
+            claimName: prometheus-claim
+          name: prometheus-claim

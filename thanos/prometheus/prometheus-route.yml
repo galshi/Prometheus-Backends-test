@@ -1,0 +1,16 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: prometheus
+  namespace: thanos-test
+spec:
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  port:
+    targetPort: 9090-tcp
+  to:
+    kind: Service
+    name: prometheus
+    weight: 100
+  wildcardPolicy: None
