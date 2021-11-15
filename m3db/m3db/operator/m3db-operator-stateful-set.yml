@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: m3db-operator
+  namespace: m3db-test
+spec:
+  serviceName: m3db-operator
+  replicas: 1
+  selector:
+    matchLabels:
+      name: m3db-operator
+  template:
+    metadata:
+      labels:
+        name: m3db-operator
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65534
+        runAsGroup: 65534
+      containers:
+        - name: m3db-operator
+          image: quay.io/m3db/m3db-operator:v0.13.0
+          command:
+          - m3db-operator
+          imagePullPolicy: Always
+          env:
+            - name: ENVIRONMENT
+              value: production
+      serviceAccount: m3db-operator

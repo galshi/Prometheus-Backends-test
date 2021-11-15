@@ -1,0 +1,10 @@
+apiVersion: security.openshift.io/v1
+kind: SecurityContextConstraints
+metadata:
+  name: add-sys-resource-cap
+allowedCapabilities:
+  - SYS_RESOURCE
+runAsUser:
+  type: MustRunAsRange
+seLinuxContext:
+  type: RunAsAny

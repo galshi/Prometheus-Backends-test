@@ -1,0 +1,16 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: m3-coordinator-route
+  namespace: m3db-test
+spec:
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  port:
+    targetPort: coordinator
+  to:
+    kind: Service
+    name: m3coordinator-simple-cluster
+    weight: 100
+  wildcardPolicy: None
