@@ -20,3 +20,8 @@
 
 ### Expose route
     oc apply -f grafana-route.yaml
+
+
+### Get user and pass
+
+    echo "User: admin" && echo "Password: $(oc get secret grafana-test-admin --namespace grafana-test -o jsonpath="{.data.GF_SECURITY_ADMIN_PASSWORD}" | base64 --decode)"
