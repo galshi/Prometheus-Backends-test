@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cortex
+  namespace: cortex-test
+spec:
+  ports:
+  - name: 9009-tcp
+    port: 9009
+    protocol: TCP
+    targetPort: 9009
+  selector:
+    app: cortex
+  sessionAffinity: None
+  type: ClusterIP

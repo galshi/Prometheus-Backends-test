@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: prometheus-config
+    namespace: cortex-test
+data:
+    prometheus-config.yml: |-
+        global:
+            external_labels:
+              monitor: test
+            scrape_interval:     15s
+            evaluation_interval: 15s
+
+        remote_write:
+          - url: http://cortex.cortex-test.svc.cluster.local:9009/api/v1/push
+
+        scrape_configs:
+          - job_name: prometheus
+            static_configs:
+              - targets: ['localhost:9090']
